@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <%- include('partials/navbar') %>
+  
+  <!-- Hero Section -->
+  <div class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Safe and Reliable Transport Services</h1>
+        <p class="text-xl mb-8">Book your journey with us and experience comfort, safety, and punctuality.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/schedules" class="bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold transition duration-300">
+            View Schedules
+          </a>
+          <a href="/routes" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-700 px-6 py-3 rounded-lg font-semibold transition duration-300">
+            Explore Routes
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto">
+        <path fill="#f9fafb" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="container mx-auto px-4 py-8 -mt-20 relative z-10">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Find Your Route</h2>
+      <form action="/schedules" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label for="route_id" class="block text-sm font-medium text-gray-700 mb-1">Select Route</label>
+          <select id="route_id" name="route_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option value="">All Routes</option>
+            <% routes.forEach(route => { %>
+              <option value="<%= route.id %>"><%= route.origin %> to <%= route.destination %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div>
+          <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Travel Date</label>
+          <input type="date" id="date" name="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300">
+            Search Schedules
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Popular Routes Section -->
+  <div class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Popular Routes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% routes.forEach(route => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="bg-blue-600 text-white p-4">
+            <h3 class="text-xl font-semibold"><%= route.origin %> to <%= route.destination %></h3>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-road text-gray-500 mr-2"></i>
+              <span class="text-gray-700">Distance: <%= route.distance ? `${route.distance} km` : 'N/A' %></span>
+            </div>
+            <div class="flex items-center mb-4">
+              <i class="fas fa-clock text-gray-500 mr-2"></i>
+              <span class="text-gray-700">Duration: <%= route.duration ? `${Math.floor(route.duration / 60)}h ${route.duration % 60}m` : 'N/A' %></span>
+            </div>
+            <a href="/schedules?route_id=<%= route.id %>" class="block text-center bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded-lg transition duration-300">
+              View Schedules
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <div class="text-center mt-8">
+      <a href="/routes" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+        View All Routes
+      </a>
+    </div>
+  </div>
+
+  <!-- Our Fleet Section -->
+  <div class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Our Fleet</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <% vehicles.forEach(vehicle => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+            <div class="h-48 bg-gray-300 flex items-center justify-center">
+              <i class="fas fa-bus text-6xl text-gray-500"></i>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-2 text-gray-800"><%= vehicle.name %></h3>
+              <div class="flex items-center mb-2">
+                <i class="fas fa-id-card text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Reg: <%= vehicle.registration_number %></span>
+              </div>
+              <div class="flex items-center mb-2">
+                <i class="fas fa-users text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Capacity: <%= vehicle.capacity %> seats</span>
+              </div>
+              <% if (vehicle.route_id) { %>
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-route text-gray-500 mr-2"></i>
+                  <span class="text-gray-700">Route: <%= vehicle.origin %> to <%= vehicle.destination %></span>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <div class="text-center mt-8">
+        <a href="/vehicles" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+          View All Vehicles
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Choose Us Section -->
+  <div class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-12 text-center text-gray-800">Why Choose Us</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300">
+        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+          <i class="fas fa-shield-alt text-3xl text-blue-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Safety First</h3>
+        <p class="text-gray-600">Your safety is our top priority with well-maintained vehicles and professional drivers.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300">
+        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+          <i class="fas fa-clock text-3xl text-blue-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Punctuality</h3>
+        <p class="text-gray-600">We value your time and ensure our services run according to schedule.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300">
+        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+          <i class="fas fa-couch text-3xl text-blue-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Comfort</h3>
+        <p class="text-gray-600">Enjoy comfortable seating and amenities throughout your journey with us.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300">
+        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+          <i class="fas fa-headset text-3xl text-blue-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">Customer Support</h3>
+        <p class="text-gray-600">Our dedicated team is always ready to assist you with any queries or concerns.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Book Your Journey?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">Experience the best transport service with comfort, safety, and reliability.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/schedules" class="bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold transition duration-300">
+          Book Now
+        </a>
+        <a href="/contact" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-700 px-6 py-3 rounded-lg font-semibold transition duration-300">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

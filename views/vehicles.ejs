@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Fleet - Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <%- include('partials/navbar') %>
+  
+  <div class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-3xl font-bold mb-4">Our Fleet</h1>
+      <p class="text-xl max-w-2xl mx-auto">Discover our modern and comfortable vehicles designed to make your journey pleasant and safe.</p>
+    </div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% vehicles.forEach(vehicle => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="h-48 bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-bus text-6xl text-gray-400"></i>
+          </div>
+          <div class="p-6">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800"><%= vehicle.name %></h2>
+            
+            <div class="mb-4 space-y-2">
+              <div class="flex items-center">
+                <i class="fas fa-id-card text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Registration: <%= vehicle.registration_number %></span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-users text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Capacity: <%= vehicle.capacity %> seats</span>
+              </div>
+              <% if (vehicle.route_id) { %>
+                <div class="flex items-center">
+                  <i class="fas fa-route text-gray-500 mr-2"></i>
+                  <span class="text-gray-700">Route: <%= vehicle.origin %> to <%= vehicle.destination %></span>
+                </div>
+              <% } %>
+            </div>
+            
+            <a href="/schedules?vehicle_id=<%= vehicle.id %>" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+              View Schedules
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+  
+  <!-- Vehicle Features -->
+  <div class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Vehicle Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <i class="fas fa-wifi text-3xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Free Wi-Fi</h3>
+          <p class="text-gray-600">Stay connected throughout your journey with our complimentary Wi-Fi service.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <i class="fas fa-plug text-3xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Power Outlets</h3>
+          <p class="text-gray-600">Charge your devices on the go with convenient power outlets at every seat.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <i class="fas fa-temperature-low text-3xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Climate Control</h3>
+          <p class="text-gray-600">Enjoy a comfortable temperature throughout your journey regardless of the weather.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+          <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+            <i class="fas fa-couch text-3xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Comfortable Seating</h3>
+          <p class="text-gray-600">Relax in our ergonomically designed seats with ample legroom for your comfort.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+</body>
+</html>

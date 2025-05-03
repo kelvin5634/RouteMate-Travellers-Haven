@@ -1,0 +1,53 @@
+<div class="bg-gray-800 text-white w-64 min-h-screen flex-shrink-0">
+    <div class="p-4 flex items-center">
+      <i class="fas fa-bus text-blue-400 text-2xl mr-2"></i>
+      <span class="font-bold text-xl">Admin Panel</span>
+    </div>
+    
+    <div class="border-t border-gray-700"></div>
+    
+    <nav class="mt-5">
+      <a href="/admin/dashboard" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'dashboard') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-tachometer-alt w-5 mr-3"></i>
+        <span>Dashboard</span>
+      </a>
+      
+      <a href="/admin/vehicles" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'vehicles') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-bus w-5 mr-3"></i>
+        <span>Vehicles</span>
+      </a>
+      
+      <a href="/admin/routes" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'routes') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-route w-5 mr-3"></i>
+        <span>Routes</span>
+      </a>
+      
+      <a href="/admin/schedules" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'schedules') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-calendar-alt w-5 mr-3"></i>
+        <span>Schedules</span>
+      </a>
+      
+      <a href="/admin/bookings" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'bookings') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-ticket-alt w-5 mr-3"></i>
+        <span>Bookings</span>
+      </a>
+      
+      <a href="/admin/messages" class="flex items-center py-3 px-6 hover:bg-gray-700 <%= (typeof activePage !== 'undefined' && activePage === 'messages') ? 'bg-gray-700' : '' %>">
+        <i class="fas fa-envelope w-5 mr-3"></i>
+        <span>Messages</span>
+      </a>
+      
+      <div class="border-t border-gray-700 my-4"></div>
+      
+      <a href="/" class="flex items-center py-3 px-6 hover:bg-gray-700">
+        <i class="fas fa-home w-5 mr-3"></i>
+        <span>View Site</span>
+      </a>
+      
+      <a href="/logout" class="flex items-center py-3 px-6 hover:bg-gray-700">
+        <i class="fas fa-sign-out-alt w-5 mr-3"></i>
+        <span>Logout</span>
+      </a>
+    </nav>
+  </div>
+  

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <%- include('partials/navbar') %>
+  
+  <div class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-3xl font-bold mb-4">Contact Us</h1>
+      <p class="text-xl max-w-2xl mx-auto">We're here to help! Reach out to us with any questions or concerns.</p>
+    </div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Contact Form -->
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white py-3 px-6">
+          <h2 class="text-xl font-bold">Send Us a Message</h2>
+        </div>
+        
+        <div class="p-6">
+          <% if (success) { %>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+              <%= success %>
+            </div>
+          <% } %>
+          
+          <% if (error) { %>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <%= error %>
+            </div>
+          <% } %>
+          
+          <form action="/contact" method="POST">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+                <input type="text" id="name" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              
+              <div>
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                <input type="email" id="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject</label>
+              <input type="text" id="subject" name="subject" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+              <textarea id="message" name="message" rows="5" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Contact Information -->
+      <div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+          <div class="bg-blue-600 text-white py-3 px-6">
+            <h2 class="text-xl font-bold">Contact Information</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex items-start mb-4">
+              <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4">
+                <i class="fas fa-map-marker-alt text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-1">Address</h3>
+                <p class="text-gray-600">
+                  123 Transport Avenue<br>
+                  New York, NY 10001<br>
+                  United States
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start mb-4">
+              <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4">
+                <i class="fas fa-phone-alt text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-1">Phone</h3>
+                <p class="text-gray-600">
+                  Customer Service: +1 (555) 123-4567<br>
+                  Booking Inquiries: +1 (555) 765-4321
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start mb-4">
+              <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4">
+                <i class="fas fa-envelope text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-1">Email</h3>
+                <p class="text-gray-600">
+                  General Inquiries: info@transport.com<br>
+                  Customer Support: support@transport.com<br>
+                  Bookings: bookings@transport.com
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4">
+                <i class="fas fa-clock text-blue-600"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-1">Operating Hours</h3>
+                <p class="text-gray-600">
+                  Monday - Friday: 8:00 AM - 8:00 PM<br>
+                  Saturday: 9:00 AM - 6:00 PM<br>
+                  Sunday: 10:00 AM - 4:00 PM
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Map -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="bg-blue-600 text-white py-3 px-6">
+            <h2 class="text-xl font-bold">Find Us</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="h-64 bg-gray-200 flex items-center justify-center">
+              <div class="text-center">
+                <i class="fas fa-map-marked-alt text-5xl text-gray-400 mb-3"></i>
+                <p class="text-gray-500">Interactive map coming soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- FAQ Section -->
+  <div class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Frequently Asked Questions</h2>
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+          <div class="p-4 cursor-pointer bg-white hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800">How do I book a ticket?</h3>
+              <i class="fas fa-chevron-down text-gray-500"></i>
+            </div>
+            <div class="mt-2 text-gray-600">
+              You can book a ticket online through our website by selecting your desired route and schedule, choosing your seat, and completing the payment process. Alternatively, you can visit our office or call our booking hotline.
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+          <div class="p-4 cursor-pointer bg-white hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800">What is your cancellation policy?</h3>
+              <i class="fas fa-chevron-down text-gray-500"></i>
+            </div>
+            <div class="mt-2 text-gray-600">
+              Cancellations made at least 24 hours before departure are eligible for a full refund. Cancellations made within 24 hours of departure may be subject to a cancellation fee. Please contact our customer service for assistance with cancellations.
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+          <div class="p-4 cursor-pointer bg-white hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800">How early should I arrive before departure?</h3>
+              <i class="fas fa-chevron-down text-gray-500"></i>
+            </div>
+            <div class="mt-2 text-gray-600">
+              We recommend arriving at least 30 minutes before the scheduled departure time to allow for check-in and boarding procedures. For peak travel times or holidays, we suggest arriving 45-60 minutes early.
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="p-4 cursor-pointer bg-white hover:bg-gray-50">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800">What amenities are available on your vehicles?</h3>
+              <i class="fas fa-chevron-down text-gray-500"></i>
+            </div>
+            <div class="mt-2 text-gray-600">
+              Our vehicles are equipped with comfortable seating, air conditioning, free Wi-Fi, power outlets, and onboard restrooms on select routes. Some premium services may offer additional amenities such as entertainment systems and refreshments.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+</body>
+</html>

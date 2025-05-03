@@ -1,0 +1,105 @@
+<nav class="bg-white shadow-md">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center">
+          <i class="fas fa-bus text-blue-600 text-2xl mr-2"></i>
+          <span class="font-bold text-xl text-gray-800">TransportMS</span>
+        </a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+        <a href="/routes" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Routes</a>
+        <a href="/schedules" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Schedules</a>
+        <a href="/vehicles" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Vehicles</a>
+        <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+      </div>
+      
+      <!-- User Menu -->
+      <div class="flex items-center">
+        <% if (user) { %>
+          <div class="relative">
+            <button data-dropdown-toggle="user-menu" class="flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
+              <i class="fas fa-user-circle text-lg mr-2"></i>
+              <span><%= user.name %></span>
+              <i class="fas fa-chevron-down ml-1 text-xs"></i>
+            </button>
+            <div data-dropdown="user-menu" class="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 hidden">
+              <% if (user.role === 'admin') { %>
+                <a href="/admin/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>
+              <% } else { %>
+                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Bookings</a>
+              <% } %>
+              <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+            </div>
+          </div>
+        <% } else { %>
+          <a href="/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+          <a href="/register" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Register</a>
+        <% } %>
+        
+        <!-- Mobile menu button -->
+        <button type="button" class="md:hidden ml-2 bg-gray-100 p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="/" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Home</a>
+        <a href="/routes" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Routes</a>
+        <a href="/schedules" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Schedules</a>
+        <a href="/vehicles" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Vehicles</a>
+        <a href="/contact" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // User dropdown toggle
+    const dropdownButton = document.querySelector('[data-dropdown-toggle="user-menu"]');
+    const dropdownMenu = document.querySelector('[data-dropdown="user-menu"]');
+    
+    if (dropdownButton && dropdownMenu) {
+      // Toggle dropdown on button click
+      dropdownButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        dropdownMenu.classList.toggle('hidden');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.add('hidden');
+        }
+      });
+
+      // Close dropdown when clicking a menu item
+      dropdownMenu.querySelectorAll('a').forEach(item => {
+        item.addEventListener('click', function() {
+          dropdownMenu.classList.add('hidden');
+        });
+      });
+    }
+  });
+</script>

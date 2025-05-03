@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Seat - Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .seat {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .seat-available {
+      background-color: #e5e7eb;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+    .seat-available:hover {
+      background-color: #d1d5db;
+    }
+    .seat-booked {
+      background-color: #ef4444;
+      color: white;
+      cursor: not-allowed;
+    }
+    .seat-selected {
+      background-color: #2563eb;
+      color: white;
+    }
+    .bus-layout {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .bus-front {
+      width: 100%;
+      height: 60px;
+      background-color: #d1d5db;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #374151;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <%- include('partials/navbar') %>
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+        <div class="bg-blue-600 text-white py-4 px-6">
+          <h1 class="text-2xl font-bold">Book Your Seat</h1>
+        </div>
+        
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Trip Details -->
+            <div>
+              <h2 class="text-xl font-bold mb-4 text-gray-800">Trip Details</h2>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="mb-3">
+                  <span class="text-gray-500 text-sm">Route:</span>
+                  <p class="font-semibold text-gray-800"><%= schedule.origin %> to <%= schedule.destination %></p>
+                </div>
+                <div class="mb-3">
+                  <span class="text-gray-500 text-sm">Vehicle:</span>
+                  <p class="font-semibold text-gray-800"><%= schedule.vehicle_name %> (<%= schedule.registration_number %>)</p>
+                </div>
+                <div class="mb-3">
+                  <span class="text-gray-500 text-sm">Departure:</span>
+                  <p class="font-semibold text-gray-800">
+                    <%= new Date(schedule.departure_time).toLocaleDateString() %> at 
+                    <%= new Date(schedule.departure_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+                  </p>
+                </div>
+                <div class="mb-3">
+                  <span class="text-gray-500 text-sm">Arrival:</span>
+                  <p class="font-semibold text-gray-800">
+                    <%= new Date(schedule.arrival_time).toLocaleDateString() %> at 
+                    <%= new Date(schedule.arrival_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+                  </p>
+                </div>
+                <div>
+                  <span class="text-gray-500 text-sm">Price:</span>
+                  <p class="font-semibold text-gray-800">$<%= schedule.price.toFixed(2) %></p>
+                </div>
+              </div>
+              
+              <div class="mt-6">
+                <h3 class="font-semibold text-gray-800 mb-2">Booking Summary</h3>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <div class="mb-3">
+                    <span class="text-gray-500 text-sm">Selected Seat:</span>
+                    <p id="selected-seat-display" class="font-semibold text-gray-800">None selected</p>
+                  </div>
+                  <div class="mb-3">
+                    <span class="text-gray-500 text-sm">Price:</span>
+                    <p class="font-semibold text-gray-800">$<%= schedule.price.toFixed(2) %></p>
+                  </div>
+                  <div>
+                    <span class="text-gray-500 text-sm">Total:</span>
+                    <p id="total-price" class="font-bold text-blue-600">$0.00</p>
+                  </div>
+                </div>
+                
+                <button id="book-button" disabled class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Complete Booking
+                </button>
+              </div>
+            </div>
+            
+            <!-- Seat Selection -->
+            <div>
+              <h2 class="text-xl font-bold mb-4 text-gray-800">Select Your Seat</h2>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-center mb-4">
+                  <div class="flex items-center mr-4">
+                    <div class="w-4 h-4 bg-gray-300 rounded-sm mr-2"></div>
+                    <span class="text-sm text-gray-600">Available</span>
+                  </div>
+                  <div class="flex items-center mr-4">
+                    <div class="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
+                    <span class="text-sm text-gray-600">Booked</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-4 h-4 bg-blue-600 rounded-sm mr-2"></div>
+                    <span class="text-sm text-gray-600">Selected</span>
+                  </div>
+                </div>
+                
+                <div class="bus-layout">
+                  <div class="bus-front">
+                    <i class="fas fa-steering-wheel mr-2"></i> Driver
+                  </div>
+                  
+                  <div id="seats-container" class="flex flex-wrap justify-center">
+                    <!-- Seats will be generated here by JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Booking Confirmation Modal -->
+  <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-500 mb-4">
+          <i class="fas fa-check-circle text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Booking Confirmed!</h2>
+        <p class="text-gray-600">Your seat has been successfully booked.</p>
+      </div>
+      
+      <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <div class="mb-2">
+          <span class="text-gray-500 text-sm">Booking Reference:</span>
+          <p id="booking-reference" class="font-bold text-blue-600"></p>
+        </div>
+        <div class="mb-2">
+          <span class="text-gray-500 text-sm">Route:</span>
+          <p class="font-semibold text-gray-800"><%= schedule.origin %> to <%= schedule.destination %></p>
+        </div>
+        <div class="mb-2">
+          <span class="text-gray-500 text-sm">Departure:</span>
+          <p class="font-semibold text-gray-800">
+            <%= new Date(schedule.departure_time).toLocaleDateString() %> at 
+            <%= new Date(schedule.departure_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+          </p>
+        </div>
+        <div class="mb-2">
+          <span class="text-gray-500 text-sm">Seat Number:</span>
+          <p id="confirmed-seat" class="font-semibold text-gray-800"></p>
+        </div>
+      </div>
+      
+      <div class="flex justify-center">
+        <a href="/dashboard" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300">
+          Go to My Bookings
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const seatsContainer = document.getElementById('seats-container');
+      const selectedSeatDisplay = document.getElementById('selected-seat-display');
+      const totalPriceDisplay = document.getElementById('total-price');
+      const bookButton = document.getElementById('book-button');
+      const confirmationModal = document.getElementById('confirmation-modal');
+      const bookingReferenceElement = document.getElementById('booking-reference');
+      const confirmedSeatElement = document.getElementById('confirmed-seat');
+      
+      const capacity = <%= schedule.capacity %>;
+      const bookedSeats = <%= JSON.stringify(bookedSeats) %>;
+      const price = <%= schedule.price %>;
+      const scheduleId = <%= schedule.id %>;
+      
+      let selectedSeat = null;
+      
+      // Generate seats
+      for (let i = 1; i <= capacity; i++) {
+        const seatElement = document.createElement('div');
+        seatElement.className = bookedSeats.includes(i) ? 'seat seat-booked' : 'seat seat-available';
+        seatElement.textContent = i;
+        seatElement.dataset.seatNumber = i;
+      
+        if (!bookedSeats.includes(i)) {
+          seatElement.addEventListener('click', function() {
+            // Deselect previously selected seat
+            if (selectedSeat) {
+              const prevSeat = document.querySelector(`.seat[data-seat-number="${selectedSeat}"]`);
+              if (prevSeat) {
+                prevSeat.classList.remove('seat-selected');
+                prevSeat.classList.add('seat-available');
+              }
+            }
+          
+            // Select new seat
+            selectedSeat = i;
+            seatElement.classList.remove('seat-available');
+            seatElement.classList.add('seat-selected');
+          
+            // Update booking summary
+            selectedSeatDisplay.textContent = `Seat ${selectedSeat}`;
+            totalPriceDisplay.textContent = `$${price.toFixed(2)}`;
+          
+            // Enable book button
+            bookButton.disabled = false;
+          });
+        }
+      
+        seatsContainer.appendChild(seatElement);
+      }
+    
+      // Handle booking
+      bookButton.addEventListener('click', function() {
+        if (!selectedSeat) return;
+      
+        // Disable button to prevent multiple submissions
+        bookButton.disabled = true;
+        bookButton.textContent = 'Processing...';
+      
+        // Send booking request
+        fetch('/book', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            scheduleId: scheduleId,
+            seatNumber: selectedSeat
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Show confirmation modal
+            bookingReferenceElement.textContent = data.bookingReference;
+            confirmedSeatElement.textContent = `Seat ${selectedSeat}`;
+            confirmationModal.classList.remove('hidden');
+          } else {
+            alert('Booking failed: ' + data.message);
+            bookButton.disabled = false;
+            bookButton.textContent = 'Complete Booking';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during booking. Please try again.');
+          bookButton.disabled = false;
+          bookButton.textContent = 'Complete Booking';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

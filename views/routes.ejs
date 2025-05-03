@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routes - Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+  <%- include('partials/navbar') %>
+  
+  <div class="bg-blue-600 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-3xl font-bold mb-4">Our Routes</h1>
+      <p class="text-xl max-w-2xl mx-auto">Explore our extensive network of routes connecting major cities with comfort and reliability.</p>
+    </div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% routes.forEach(route => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+          <div class="bg-blue-600 text-white p-4">
+            <h2 class="text-xl font-semibold"><%= route.origin %> to <%= route.destination %></h2>
+          </div>
+          <div class="p-6">
+            <div class="mb-4 space-y-2">
+              <div class="flex items-center">
+                <i class="fas fa-road text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Distance: <%= route.distance ? `${route.distance} km` : 'N/A' %></span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-clock text-gray-500 mr-2"></i>
+                <span class="text-gray-700">Duration: <%= route.duration ? `${Math.floor(route.duration / 60)}h ${route.duration % 60}m` : 'N/A' %></span>
+              </div>
+            </div>
+            
+            <a href="/schedules?route_id=<%= route.id %>" class="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+              View Schedules
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+  
+  <!-- Route Map -->
+  <div class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Our Route Network</h2>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="h-96 bg-gray-200 flex items-center justify-center mb-4">
+          <div class="text-center">
+            <i class="fas fa-map-marked-alt text-6xl text-gray-400 mb-4"></i>
+            <p class="text-gray-500">Interactive route map coming soon</p>
+          </div>
+        </div>
+        <p class="text-gray-600 text-center">
+          Our extensive network connects major cities across the country, providing convenient and reliable transportation options for all your travel needs.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Route Benefits -->
+  <div class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Benefits of Our Routes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex items-center mb-4">
+          <div class="bg-blue-100 p-3 rounded-full mr-4">
+            <i class="fas fa-map-signs text-2xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">Strategic Connections</h3>
+        </div>
+        <p class="text-gray-600">
+          Our routes are strategically planned to connect major cities and popular destinations, making your travel convenient and efficient.
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex items-center mb-4">
+          <div class="bg-blue-100 p-3 rounded-full mr-4">
+            <i class="fas fa-clock text-2xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">Frequent Departures</h3>
+        </div>
+        <p class="text-gray-600">
+          We offer multiple departures throughout the day on our popular routes, giving you flexibility in planning your journey.
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex items-center mb-4">
+          <div class="bg-blue-100 p-3 rounded-full mr-4">
+            <i class="fas fa-route text-2xl text-blue-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800">Direct Routes</h3>
+        </div>
+        <p class="text-gray-600">
+          Enjoy direct connections between major destinations, minimizing travel time and maximizing your comfort.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+</body>
+</html>

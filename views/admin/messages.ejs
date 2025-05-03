@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Messages - Transport Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <%- include('../partials/admin-sidebar') %>
+    
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto">
+      <div class="p-6">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Contact Messages</h1>
+        
+        <!-- Messages List -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="bg-blue-600 text-white py-3 px-6">
+            <h2 class="text-xl font-bold">All Messages</h2>
+          </div>
+          
+          <div class="p-6">
+            <% if (messages.length === 0) { %>
+              <div class="text-center py-8">
+                <i class="fas fa-inbox text-gray-300 text-5xl mb-4"></i>
+                <p class="text-gray-500">No messages found.</p>
+              </div>
+            <% } else { %>
+              <div class="space-y-6">
+                <% messages.forEach(message => { %>
+                  <div class="border rounded-lg overflow-hidden <%= message.is_read ? 'border-gray-200' : 'border-blue-300 bg-blue-50' %>">
+                    <div class="bg-gray-50 px-4 py-2 flex justify-between items-center border-b">
+                      <div>
+                        <span class="font-semibold text-gray-800"><%= message.name %></span>
+                        <span class="text-gray-500 ml-2">&lt;<%= message.email %>&gt;</span>
+                      </div>
+                      <div class="text-sm text-gray-500">
+                        <%= new Date(message.created_at).toLocaleString() %>
+                      </div>
+                    </div>
+                    <div class="p-4">
+                      <h3 class="font-semibold text-lg mb-2"><%= message.subject %></h3>
+                      <p class="text-gray-700 whitespace-pre-line"><%= message.message %></p>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
