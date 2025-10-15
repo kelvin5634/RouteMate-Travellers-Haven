@@ -93,7 +93,7 @@
                 </div>
                 <div>
                   <span class="text-gray-500 text-sm">Price:</span>
-                  <p class="font-semibold text-gray-800">$<%= schedule.price.toFixed(2) %></p>
+                  <p class="font-semibold text-gray-800">Ksh <%= schedule.price.toFixed(2) %></p>
                 </div>
               </div>
               
@@ -106,11 +106,11 @@
                   </div>
                   <div class="mb-3">
                     <span class="text-gray-500 text-sm">Price:</span>
-                    <p class="font-semibold text-gray-800">$<%= schedule.price.toFixed(2) %></p>
+                    <p class="font-semibold text-gray-800">Ksh <%= schedule.price.toFixed(2) %></p>
                   </div>
                   <div>
                     <span class="text-gray-500 text-sm">Total:</span>
-                    <p id="total-price" class="font-bold text-blue-600">$0.00</p>
+                    <p id="total-price" class="font-bold text-blue-600">Ksh 0.00</p>
                   </div>
                 </div>
                 
@@ -241,7 +241,7 @@
           
             // Update booking summary
             selectedSeatDisplay.textContent = `Seat ${selectedSeat}`;
-            totalPriceDisplay.textContent = `$${price.toFixed(2)}`;
+            totalPriceDisplay.textContent = `Ksh ${price.toFixed(2)}`;
           
             // Enable book button
             bookButton.disabled = false;

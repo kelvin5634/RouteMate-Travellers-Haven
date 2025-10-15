@@ -736,8 +736,6 @@ app.get("/admin/schedules", isAuthenticated, isAdmin, async (req, res) => {
 
     query += " ORDER BY s.departure_time ASC";
 
-    console.log("Admin schedule query:", query);
-    console.log("Admin schedule params:", params);
 
     const [schedules] = await pool.query(query, params);
 
@@ -746,9 +744,7 @@ app.get("/admin/schedules", isAuthenticated, isAdmin, async (req, res) => {
       schedule.price = parseFloat(schedule.price);
     });
 
-    console.log(`Found ${schedules.length} admin schedules matching criteria`);
-    console.log("Admin schedules:", JSON.stringify(schedules, null, 2));
-
+  
     res.render("admin/schedules", {
       user: req.session.user,
       schedules,

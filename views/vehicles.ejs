@@ -22,9 +22,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <% vehicles.forEach(vehicle => { %>
         <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-          <div class="h-48 bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-bus text-6xl text-gray-400"></i>
+          <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+            <img src="<%= vehicle.image_url %>" alt="" class="w-full h-full object-contain">
           </div>
+          
+          
           <div class="p-6">
             <h2 class="text-2xl font-bold mb-2 text-gray-800"><%= vehicle.name %></h2>
             

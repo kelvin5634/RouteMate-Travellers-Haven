@@ -1,70 +1,85 @@
-<nav class="bg-white shadow-md">
+<nav class="bg-gradient-to-r from-white to-blue-50 shadow-lg sticky top-0 z-50">
   <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center h-16">
+    <div class="flex justify-between items-center h-20">
       <!-- Logo -->
       <div class="flex items-center">
-        <a href="/" class="flex items-center">
-          <i class="fas fa-bus text-blue-600 text-2xl mr-2"></i>
-          <span class="font-bold text-xl text-gray-800">RouteMate Travellers Haven</span>
+        <a href="/" class="flex items-center group">
+          <i class="fas fa-bus text-3xl text-blue-600 group-hover:text-blue-800 transition duration-300 mr-3"></i>
+          <span class="font-bold text-2xl text-gray-800 group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-blue-800 transition duration-300">RouteMate Travellers Haven</span>
         </a>
       </div>
       
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-4">
-        <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-        <a href="/routes" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Routes</a>
-        <a href="/schedules" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Schedules</a>
-        <a href="/vehicles" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Vehicles</a>
-        <a href="/contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="/" class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium transition duration-300 group">
+          Home
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="/routes" class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium transition duration-300 group">
+          Routes
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="/schedules" class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium transition duration-300 group">
+          Schedules
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="/vehicles" class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium transition duration-300 group">
+          Vehicles
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="/contact" class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium transition duration-300 group">
+          Contact
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+        </a>
       </div>
       
       <!-- User Menu -->
-      <div class="flex items-center">
+      <div class="flex items-center space-x-4">
         <% if (user) { %>
           <div class="relative">
-            <button data-dropdown-toggle="user-menu" class="flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
-              <i class="fas fa-user-circle text-lg mr-2"></i>
+            <button data-dropdown-toggle="user-menu" class="flex items-center text-gray-700 hover:text-blue-600 px-4 py-2 text-lg font-medium focus:outline-none transition duration-300">
+              <i class="fas fa-user-circle text-2xl mr-2 text-blue-600"></i>
               <span><%= user.name %></span>
-              <i class="fas fa-chevron-down ml-1 text-xs"></i>
+              <i class="fas fa-chevron-down ml-2 text-sm"></i>
             </button>
-            <div data-dropdown="user-menu" class="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 hidden">
+            <div data-dropdown="user-menu" class="absolute right-0 w-56 mt-2 bg-white rounded-xl shadow-xl overflow-hidden z-20 hidden">
               <% if (user.role === 'admin') { %>
-                <a href="/admin/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin Dashboard</a>
+                <a href="/admin/dashboard" class="block px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">Admin Dashboard</a>
               <% } else { %>
-                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Bookings</a>
+                <a href="/dashboard" class="block px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">My Bookings</a>
               <% } %>
-              <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+              <a href="/logout" class="block px-5 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">Logout</a>
             </div>
           </div>
         <% } else { %>
-          <a href="/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Login</a>
-          <a href="/register" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Register</a>
+          <a href="/login" class="text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 px-5 py-2 rounded-full text-sm font-medium transition duration-300 transform hover:scale-105">Login</a>
+          <a href="/register" class="text-white bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 px-5 py-2 rounded-full text-sm font-medium transition duration-300 transform hover:scale-105">Register</a>
         <% } %>
         
         <!-- Mobile menu button -->
-        <button type="button" class="md:hidden ml-2 bg-gray-100 p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button" class="md:hidden bg-blue-100 p-3 rounded-full text-blue-600 hover:bg-blue-200 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
-          <i class="fas fa-bars"></i>
+          <i class="fas fa-bars text-xl"></i>
         </button>
       </div>
     </div>
     
     <!-- Mobile Navigation -->
     <div class="md:hidden hidden" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a href="/" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Home</a>
-        <a href="/routes" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Routes</a>
-        <a href="/schedules" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Schedules</a>
-        <a href="/vehicles" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Vehicles</a>
-        <a href="/contact" class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Contact</a>
+      <div class="px-4 pt-4 pb-6 space-y-2 bg-gradient-to-b from-blue-50 to-white shadow-lg">
+        <a href="/" class="block text-gray-700 hover:text-blue-600 px-4 py-3 rounded-lg text-lg font-medium transition duration-200">Home</a>
+        <a href="/routes" class="block text-gray-700 hover:text-blue-600 px-4 py-3 rounded-lg text-lg font-medium transition duration-200">Routes</a>
+        <a href="/schedules" class="block text-gray-700 hover:text-blue-600 px-4 py-3 rounded-lg text-lg font-medium transition duration-200">Schedules</a>
+        <a href="/vehicles" class="block text-gray-700 hover:text-blue-600 px-4 py-3 rounded-lg text-lg font-medium transition duration-200">Vehicles</a>
+        <a href="/contact" class="block text-gray-700 hover:text-blue-600 px-4 py-3 rounded-lg text-lg font-medium transition duration-200">Contact</a>
       </div>
     </div>
   </div>
 </nav>
 
 <script>
-  // Mobile menu toggle
   document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
     const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
     const mobileMenu = document.getElementById('mobile-menu');
     
@@ -73,6 +88,7 @@
         const expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', !expanded);
         mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('animate-slide-in');
       });
     }
 
@@ -81,20 +97,17 @@
     const dropdownMenu = document.querySelector('[data-dropdown="user-menu"]');
     
     if (dropdownButton && dropdownMenu) {
-      // Toggle dropdown on button click
       dropdownButton.addEventListener('click', function(event) {
         event.preventDefault();
         dropdownMenu.classList.toggle('hidden');
       });
 
-      // Close dropdown when clicking outside
       document.addEventListener('click', function(event) {
         if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
           dropdownMenu.classList.add('hidden');
         }
       });
 
-      // Close dropdown when clicking a menu item
       dropdownMenu.querySelectorAll('a').forEach(item => {
         item.addEventListener('click', function() {
           dropdownMenu.classList.add('hidden');
